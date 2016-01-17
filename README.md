@@ -12,7 +12,7 @@ Take a look at demo/App.js for usage, you can also run it in your local envirome
 
 `npm install & npm start`
 
-and open [localhost:3000](http://localhost:3000)
+and open [localhost:3001](http://localhost:3001)
 
 ```
 import React, {Component} from 'react'

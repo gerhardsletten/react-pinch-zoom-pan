@@ -66,6 +66,7 @@ class ReactPinchZoomPan extends Component {
   }
 
   componentDidMount() {
+    console.log('test');
     this.resize();
     window.addEventListener('resize', throttle( () => this.resize(), 500));
   }
@@ -137,12 +138,14 @@ class ReactPinchZoomPan extends Component {
   render() {
     const { scale,x,y } = this.state.obj;
     return (
-      <div ref="root" className="some">
-        {this.props.render({
-          x: x.toFixed(2),
-          y: y.toFixed(2),
-          scale: scale.toFixed(2)
-        })}
+      <div>
+        <div ref="root" className="some3">
+          {this.props.render({
+            x: x.toFixed(2),
+            y: y.toFixed(2),
+            scale: scale.toFixed(2)
+          })}
+        </div>
       </div>
     );
   }

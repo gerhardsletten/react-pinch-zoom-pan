@@ -1,3 +1,3 @@
 'use strict';
 
-module.exports = require('./lib/Pinch');
+module.exports = require('./lib/ReactPinchPanZoom');

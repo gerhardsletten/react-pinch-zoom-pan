@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
 import s from 'react-prefixr';
-import PinchPanZoom from '..';
+import PinchPanZoom from '../src/ReactPinchPanZoom';
 
 export default class App extends Component {
   
   getContainerStyle() {
     return {
-      paddingTop: '100%',
+      paddingTop: '50%',
       overflow: 'hidden',
-      position: 'relative'
+      position: 'relative',
+      border: '1px solid #ccc'
     }
   }
 
@@ -30,7 +31,7 @@ export default class App extends Component {
             <div style={this.getContainerStyle()}>
               <div style={this.getInnerStyle()}>
                 <img 
-                  src="http://lorempixel.com/300/300/nature/"
+                  src="http://lorempixel.com/600/300/nature/"
                   style={s({
                     width: '100%', 
                     height: 'auto', 
@@ -39,7 +40,6 @@ export default class App extends Component {
                   })} />
               </div>
             </div>
-            <p>scale: {obj.scale}, x: {obj.x}, y: {obj.y}</p>
           </div>
         );
       }} />

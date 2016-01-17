@@ -6,7 +6,7 @@ module.exports = {
   entry: [
     'webpack-dev-server/client?http://localhost:3001',
     'webpack/hot/only-dev-server',
-    './lib/index'
+    './demo/index'
   ],
   output: {
     path: path.join(__dirname, 'build'),
@@ -25,7 +25,8 @@ module.exports = {
       {
         test: /\.js$/, 
         loader: 'react-hot',
-        include: path.join(__dirname, 'lib')
+        include: path.join(__dirname, '..'),
+        exclude: /node_modules/ 
       },
       {
         test: /\.js$/,
@@ -34,7 +35,8 @@ module.exports = {
           cacheDirectory: true,
           presets: ['es2015','react']
         },
-        include: path.join(__dirname, 'lib')
+        include: path.join(__dirname, '..'),
+        exclude: /node_modules/ 
       }
     ]
   }

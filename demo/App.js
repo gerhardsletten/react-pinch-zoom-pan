@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import s from 'react-prefixr'
-import PinchPanZoom from '../src/ReactPinchPanZoom'
+import PinchPanZoom from '../src/ReactPinchZoomPan'
 
 export default class App extends Component {
   

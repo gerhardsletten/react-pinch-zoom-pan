@@ -1,6 +1,6 @@
 # react-pinch-zoom-pan
 
-A react component that lets you add pinch-zoom and pan sub components. 
+A react component that lets you add pinch-zoom and pan sub components. On touch you can pinch-zoom and pan the zoomed image. On desktop you can 'pinch' by holding down your *ALT-key* and do a mousedown from center of inner content onto the edges.
 
 ## Install
 
@@ -8,7 +8,11 @@ A react component that lets you add pinch-zoom and pan sub components.
 
 ## Usage
 
-Take a look at lib/App.js for usage:
+Take a look at demo/App.js for usage, you can also run it in your local enviroment by 
+
+`npm install & npm start`
+
+and open [localhost:3000](http://localhost:3000)
 
 ```
 import React, {Component} from 'react'
@@ -39,7 +43,7 @@ export default class App extends Component {
 
   render() {
     const {height,width} = this.props
-    const ratio = const ratio = (height / width) * 100
+    const ratio = (height / width) * 100
     return (
       <PinchPanZoom maxScale={2} render={obj => {
         return (
@@ -61,3 +65,9 @@ export default class App extends Component {
   }
 }
 ```
+
+## Discussion
+
+* My experience with rxjs, see `src/ReactPinchPanZoom.js` if you have any suggestions and submit a pull request.
+
+Thanks to [Hugo Bessaa](https://github.com/hugobessaa) and [rx-react-pinch](https://github.com/hugobessaa/rx-react-pinch) for inital idea, but it had no support for panning and desktop.

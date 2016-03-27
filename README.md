@@ -8,7 +8,34 @@ A react component that lets you add pinch-zoom and pan sub components. On touch 
 
 `npm install react-pinch-zoom-pan`
 
-## Usage
+## Usage 
+
+Take a look at demo/App.js for usage, you can also run it in your local enviroment by 
+
+`npm install & npm start`
+
+and open [localhost:3001](http://localhost:3001)
+
+```
+import React, {Component} from 'react'
+import {PinchView} from 'react-pinch-zoom-pan'
+
+class App extends Component {
+  render () {
+    return (
+      <PinchView debug backgroundColor='#ddd' maxScale={4} containerRatio={((400 / 600) * 100)}>
+        <img src={'http://lorempixel.com/600/400/nature/'} style={{
+          margin: 'auto',
+          width: '100%',
+          height: 'auto'
+        }} />
+      </PinchView>
+    )
+  }
+}
+```
+
+### Usage underlaying zoom widget (PinchPanZoom)
 
 Take a look at demo/App.js for usage, you can also run it in your local enviroment by 
 
@@ -19,7 +46,7 @@ and open [localhost:3001](http://localhost:3001)
 ```
 import React, {Component} from 'react'
 import s from 'react-prefixr'
-import PinchPanZoom from 'react-pinch-zoom-pan'
+import {PinchPanZoom} from 'react-pinch-zoom-pan'
 
 export default class App extends Component {
   

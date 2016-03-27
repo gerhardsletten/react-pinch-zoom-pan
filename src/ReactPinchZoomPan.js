@@ -110,8 +110,8 @@ class ReactPinchZoomPan extends Component {
             y: (scaleFactor < 1.01) ? 0 : y
           }
         } else {
-          let scaleFactorX = ((size.width * scale) - size.width) / 4
-          let scaleFactorY = ((size.height * scale) - size.height) / 4
+          let scaleFactorX = ((size.width * scale) - size.width) / (maxScale * 2)
+          let scaleFactorY = ((size.height * scale) - size.height) / (maxScale * 2)
           return {
             x: between(inverse(scaleFactorX), scaleFactorX, movePoint.x - startPoint.x),
             y: between(inverse(scaleFactorY), scaleFactorY, movePoint.y - startPoint.y)

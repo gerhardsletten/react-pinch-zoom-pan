@@ -2,6 +2,8 @@
 
 A react component that lets you add pinch-zoom and pan sub components. On touch you can pinch-zoom and pan the zoomed image. On desktop you can 'pinch' by holding down your *ALT-key* and do a mousedown from center of inner content onto the edges.
 
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
+
 ## Install
 
 `npm install react-pinch-zoom-pan`

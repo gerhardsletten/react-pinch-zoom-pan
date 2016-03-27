@@ -58,10 +58,6 @@ class ReactPinchZoomPan extends Component {
     }
   }
 
-  componentWillMount () {
-    this.handlePinch()
-  }
-
   componentWillUnmount () {
     if (this.pinchSubscription) {
       this.pinchSubscription.dispose()
@@ -70,12 +66,14 @@ class ReactPinchZoomPan extends Component {
   }
 
   componentDidMount () {
+    this.handlePinch()
     this.resize()
     window.addEventListener('resize', throttle(() => this.resize(), 500))
   }
 
   handlePinch () {
-    const touchStart = Rx.Observable.fromEvent(window, (isTouch()) ? 'touchstart' : 'mousedown')
+    const domNode = this.refs.root
+    const touchStart = Rx.Observable.fromEvent(domNode, (isTouch()) ? 'touchstart' : 'mousedown')
     const touchMove = Rx.Observable.fromEvent(window, (isTouch()) ? 'touchmove' : 'mousemove')
     const touchEnd = Rx.Observable.fromEvent(window, (isTouch()) ? 'touchend' : 'mouseup')
 

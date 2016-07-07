@@ -1,7 +1,8 @@
 src/
 test/
+www/
 demo/
-index.html
-server.js
 webpack.config.js
+webpack.build.config.js
 .gitignore
+.babelrc

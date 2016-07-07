@@ -1,15 +1,12 @@
 import React, {Component} from 'react'
 import {PinchView} from '../src/index'
+import './style.css'
 
 export default class App extends Component {
 
   render () {
     return (
-      <div style={{
-        maxWidth: 400,
-        marginLeft: 'auto',
-        marginRight: 'auto'
-      }}>
+      <div className='container'>
         <h1>Demo of react-pinch-zoom-pan</h1>
         <p>
           Desktop: Pinch by holding down <strong>ALT</strong> and drag from center of image and out.<br />

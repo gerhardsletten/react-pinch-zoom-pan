@@ -1,24 +1,22 @@
 var path = require('path')
-var webpack = require('webpack')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var autoprefixer = require('autoprefixer')
-var OpenBrowserPlugin = require('open-browser-webpack-plugin')
+var webpack = require('webpack')
 
 module.exports = {
-  devtool: 'eval',
-  entry: [
-    'webpack-dev-server/client?http://localhost:3001',
-    'webpack/hot/only-dev-server',
-    './demo/index'
-  ],
+  entry: {
+    main: [
+      'babel-polyfill',
+      './demo/index'
+    ]
+  },
   output: {
-    path: path.join(__dirname, 'build'),
-    filename: 'bundle.js',
-    publicPath: '/'
+    path: path.join(__dirname, 'www'),
+    filename: 'bundle.js'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
-    new OpenBrowserPlugin({ url: 'http://localhost:3001' })
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.NoErrorsPlugin()
   ],
   resolve: {
     extensions: ['', '.js', '.jsx']
@@ -31,12 +29,6 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        loader: 'react-hot',
-        include: path.join(__dirname, '..'),
-        exclude: /node_modules/
-      },
-      {
-        test: /\.js$/,
         loader: 'babel',
         query: {
           cacheDirectory: true
@@ -46,12 +38,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: 'style!css!postcss'
-      },
-      {
-        test: /\.js$/,
-        loader: 'eslint-loader',
-        exclude: /node_modules/
+        loader: ExtractTextPlugin.extract('style', 'css?importLoaders=2!postcss')
       },
       {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
@@ -75,7 +62,10 @@ module.exports = {
       }
     ]
   },
-  postcss: () => {
-    return [ autoprefixer({ browsers: [ 'last 2 versions' ] }) ]
-  }
+  postcss: function () {
+    return [autoprefixer({browsers: ['last 2 versions']})]
+  },
+  plugins: [
+    new ExtractTextPlugin('style.css')
+  ]
 }

@@ -51,12 +51,12 @@ class PinchView extends Component {
   }
 
   render () {
-    const {debug, maxScale, children} = this.props
+    const {debug, maxScale, holderClassName, containerClassName, children} = this.props
     return (
       <ReactPinchZoomPan maxScale={maxScale} render={(obj) => {
         return (
-          <div style={this.getHolderStyle()}>
-            <div style={this.getContainerStyle()}>
+          <div style={this.getHolderStyle()} className={holderClassName}>
+            <div style={this.getContainerStyle()} className={containerClassName}>
               <div style={this.getInnerStyle()}>
                 <div style={s(this.getContentStyle(obj))}>
                   {children}

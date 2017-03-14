@@ -20,6 +20,10 @@ function hasTwoTouchPoints (event) {
   }
 }
 
+function isZoomed (scale) {
+  return scale > 1
+}
+
 function between (min, max, val) {
   return Math.min(max, Math.max(min, val))
 }
@@ -85,7 +89,14 @@ class ReactPinchZoomPan extends Component {
     }
 
     const pinch = touchStart
-    .tap(eventPreventDefault)
+    .tap((event) => {
+      const {scale} = this.state.obj
+
+      // allow page scrolling - ignore events unless they are beginning pinch or have previously pinch zoomed
+      if (hasTwoTouchPoints(event) || isZoomed(scale)) {
+        eventPreventDefault(event)
+      }
+    })
     .flatMap((md) => {
       const startPoint = normalizeTouch(md)
       const {size} = this.state

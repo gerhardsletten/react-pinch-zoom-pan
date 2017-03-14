@@ -1,3 +1,6 @@
+# Jetbrains webstorm
+.idea
+
 # Logs
 logs
 *.log

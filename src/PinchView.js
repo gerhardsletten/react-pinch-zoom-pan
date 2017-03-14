@@ -82,6 +82,8 @@ PinchView.propTypes = {
   containerRatio: PropTypes.number,
   maxScale: PropTypes.number,
   children: PropTypes.element,
+  containerClassName: PropTypes.string,
+  holderClassName: PropTypes.string,
   backgroundColor: PropTypes.string,
   debug: PropTypes.bool
 }

@@ -14,8 +14,8 @@ export default class App extends Component {
           When the image is zoomed you will be able to drag it within the container.
         </p>
         <h2>Horizontal Image</h2>
-        <p>containerRatio is set to the same ratio as the image: {((400 / 600) * 100).toFixed(2)}</p>
-        <PinchView debug backgroundColor='#ddd' maxScale={4} containerRatio={((400 / 600) * 100)}>
+        <p>Set containerRatio to the same ratio as the image : {((400 / 600) * 100).toFixed(2)}</p>
+        <PinchView debug backgroundColor='#ddd' maxScale={3} containerRatio={((400 / 600) * 100)}>
           <img src={'http://lorempixel.com/600/400/nature/'} style={{
             margin: 'auto',
             width: '100%',
@@ -23,7 +23,7 @@ export default class App extends Component {
           }} />
         </PinchView>
         <h2>Vertical Image</h2>
-        <p>Where ratio is set to containerRatio is set to 100 (equal height and width)</p>
+        <p>Where containerRatio is set to 100 (equal height and width)</p>
         <PinchView debug backgroundColor='#ddd' maxScale={3} containerRatio={100}>
           <img src={'http://lorempixel.com/400/600/nature/'} style={{
             margin: 'auto',

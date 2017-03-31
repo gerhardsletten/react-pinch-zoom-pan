@@ -43,11 +43,16 @@ function normalizeTouch (e) {
 class ReactPinchZoomPan extends Component {
   constructor (props) {
     super(props)
-    this.state = {obj: {
-      scale: 1,
-      x: 0,
-      y: 0
-    }}
+    this.state = {
+      obj: {
+        scale: 1,
+        x: 0,
+        y: 0
+      },
+      isPinching: false,
+      isPanning: false
+    }
+    this.pinchTimeoutTimer = null
   }
 
   resize () {
@@ -133,12 +138,42 @@ class ReactPinchZoomPan extends Component {
     })
 
     this.pinchSubscription = pinch.subscribe((newObject) => {
+      if (this.state.obj.scale !== newObject.scale) {
+        this.refreshPinchTimeoutTimer()
+      }
       global.requestAnimationFrame(() => {
         this.setState({
           obj: Object.assign({}, this.state.obj, newObject)
         })
       })
     })
+  }
+
+  refreshPinchTimeoutTimer () {
+    if (this.pinchTimeoutTimer) {
+      clearTimeout(this.pinchTimeoutTimer)
+    }
+
+    if (!this.state.isPinching) {
+      this.pinchStarted()
+    }
+
+    this.pinchTimeoutTimer = setTimeout(() => this.pinchStopped(), 500)
+  }
+
+  pinchStopped () {
+    this.state.isPinching = false
+    this.pinchTimeoutTimer = null
+    if (this.props.onPinchStop) {
+      this.props.onPinchStop()
+    }
+  }
+
+  pinchStarted () {
+    this.state.isPinching = true
+    if (this.props.onPinchStart) {
+      this.props.onPinchStart()
+    }
   }
 
   render () {
@@ -161,6 +196,8 @@ ReactPinchZoomPan.defaultProps = {
 
 ReactPinchZoomPan.propTypes = {
   render: PropTypes.func,
+  onPinchStart: PropTypes.func,
+  onPinchStop: PropTypes.func,
   maxScale: PropTypes.number
 }
 

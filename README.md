@@ -97,6 +97,20 @@ export default class App extends Component {
 }
 ```
 
+### Usage event listeners
+
+The component exposes 2 event listeners: `onPinchStart` and `onPinchStop`. These are called resp. when the user starts pinching and stops pinching.
+
+```
+<PinchView debug backgroundColor='#ddd' maxScale={3} containerRatio={100} onPinchStart={() => console.log('pinch started')} onPinchStop={() => console.log('pinch stopped')}>
+  <img src={'http://lorempixel.com/400/600/nature/'} style={{
+    margin: 'auto',
+    width: 'auto',
+    height: '100%'
+  }} />
+</PinchView>
+```
+
 ## Discussion
 
 * My experience with rxjs, see `src/ReactPinchPanZoom.js` if you have any suggestions and submit a pull request.

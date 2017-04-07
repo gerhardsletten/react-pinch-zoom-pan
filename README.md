@@ -48,7 +48,7 @@ and open [localhost:3001](http://localhost:3001)
 ```
 import React, {Component} from 'react'
 import s from 'react-prefixr'
-import {PinchPanZoom} from 'react-pinch-zoom-pan'
+import {ReactPinchPanZoom} from 'react-pinch-zoom-pan'
 
 export default class App extends Component {
   
@@ -76,7 +76,7 @@ export default class App extends Component {
     const {height,width} = this.props
     const ratio = (height / width) * 100
     return (
-      <PinchPanZoom maxScale={2} render={obj => {
+      <ReactPinchPanZoom maxScale={2} render={obj => {
         return (
           <div style={this.getContainerStyle(ratio)}>
             <div style={this.getInnerStyle()}>
@@ -103,6 +103,19 @@ The component exposes 2 event listeners: `onPinchStart` and `onPinchStop`. These
 
 ```
 <PinchView debug backgroundColor='#ddd' maxScale={3} containerRatio={100} onPinchStart={() => console.log('pinch started')} onPinchStop={() => console.log('pinch stopped')}>
+  <img src={'http://lorempixel.com/400/600/nature/'} style={{
+    margin: 'auto',
+    width: 'auto',
+    height: '100%'
+  }} />
+</PinchView>
+```
+### Usage initial scale
+
+The component exposes a prop to set the `initialScale`. This can be used to display the content with zoomed in by default
+
+```
+<PinchView debug backgroundColor='#ddd' initalScale={2} maxScale={4} containerRatio={100}>
   <img src={'http://lorempixel.com/400/600/nature/'} style={{
     margin: 'auto',
     width: 'auto',

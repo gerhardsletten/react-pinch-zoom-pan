@@ -45,7 +45,7 @@ class ReactPinchZoomPan extends Component {
     super(props)
     this.state = {
       obj: {
-        scale: 1,
+        scale: props.initialScale,
         x: 0,
         y: 0
       },
@@ -191,6 +191,7 @@ class ReactPinchZoomPan extends Component {
 }
 
 ReactPinchZoomPan.defaultProps = {
+  initialScale: 1,
   maxScale: 2
 }
 
@@ -198,6 +199,7 @@ ReactPinchZoomPan.propTypes = {
   render: PropTypes.func,
   onPinchStart: PropTypes.func,
   onPinchStop: PropTypes.func,
+  initialScale: PropTypes.number,
   maxScale: PropTypes.number
 }
 

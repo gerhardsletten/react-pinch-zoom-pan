@@ -31,6 +31,15 @@ export default class App extends Component {
             height: '100%'
           }} />
         </PinchView>
+        <h2>Initial scale</h2>
+        <p>This allow you to display the content scaled (zoom x2)</p>
+        <PinchView debug backgroundColor='#ddd' initialScale={2} maxScale={4} containerRatio={100} onPinchStart={() => console.log('pinch started')} onPinchStop={() => console.log('pinch stopped')}>
+          <img src={'http://lorempixel.com/400/600/nature/'} style={{
+            margin: 'auto',
+            width: 'auto',
+            height: '100%'
+          }} />
+        </PinchView>
       </div>
     )
   }

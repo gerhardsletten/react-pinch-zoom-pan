@@ -110,6 +110,19 @@ The component exposes 2 event listeners: `onPinchStart` and `onPinchStop`. These
   }} />
 </PinchView>
 ```
+### Usage initial scale
+
+The component exposes a prop to set the `initialScale`. This can be used to display the content with zoomed in by default
+
+```
+<PinchView debug backgroundColor='#ddd' initalScale={2} maxScale={4} containerRatio={100}>
+  <img src={'http://lorempixel.com/400/600/nature/'} style={{
+    margin: 'auto',
+    width: 'auto',
+    height: '100%'
+  }} />
+</PinchView>
+```
 
 ## Discussion
 

@@ -48,7 +48,7 @@ and open [localhost:3001](http://localhost:3001)
 ```
 import React, {Component} from 'react'
 import s from 'react-prefixr'
-import {PinchPanZoom} from 'react-pinch-zoom-pan'
+import {ReactPinchPanZoom} from 'react-pinch-zoom-pan'
 
 export default class App extends Component {
   
@@ -76,7 +76,7 @@ export default class App extends Component {
     const {height,width} = this.props
     const ratio = (height / width) * 100
     return (
-      <PinchPanZoom maxScale={2} render={obj => {
+      <ReactPinchPanZoom maxScale={2} render={obj => {
         return (
           <div style={this.getContainerStyle(ratio)}>
             <div style={this.getInnerStyle()}>

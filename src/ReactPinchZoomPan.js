@@ -1,6 +1,12 @@
-import React, {Component, PropTypes} from 'react'
-import Rx from 'rx'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
+import { Observable } from 'rxjs/Observable'
 import throttle from 'lodash.throttle'
+import 'rxjs/add/observable/fromEvent'
+import 'rxjs/add/operator/do'
+import 'rxjs/add/operator/mergeMap'
+import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/takeUntil'
 
 function eventPreventDefault (event) {
   event.preventDefault()
@@ -71,20 +77,21 @@ class ReactPinchZoomPan extends Component {
     if (this.pinchSubscription) {
       this.pinchSubscription.dispose()
     }
-    window.removeEventListener('resize', this.resize)
+    global.removeEventListener('resize', this.resizeThrottled)
   }
 
   componentDidMount () {
     this.handlePinch()
     this.resize()
-    window.addEventListener('resize', throttle(() => this.resize(), 500))
+    this.resizeThrottled = throttle(() => this.resize(), 500)
+    global.addEventListener('resize', this.resizeThrottled)
   }
 
   handlePinch () {
     const domNode = this.refs.root
-    const touchStart = Rx.Observable.fromEvent(domNode, (isTouch()) ? 'touchstart' : 'mousedown')
-    const touchMove = Rx.Observable.fromEvent(window, (isTouch()) ? 'touchmove' : 'mousemove')
-    const touchEnd = Rx.Observable.fromEvent(window, (isTouch()) ? 'touchend' : 'mouseup')
+    const touchStart = Observable.fromEvent(domNode, (isTouch()) ? 'touchstart' : 'mousedown')
+    const touchMove = Observable.fromEvent(window, (isTouch()) ? 'touchmove' : 'mousemove')
+    const touchEnd = Observable.fromEvent(window, (isTouch()) ? 'touchend' : 'mouseup')
 
     function translatePos (point, size) {
       return {
@@ -94,7 +101,7 @@ class ReactPinchZoomPan extends Component {
     }
 
     const pinch = touchStart
-    .tap((event) => {
+    .do((event) => {
       const {scale} = this.state.obj
 
       // allow page scrolling - ignore events unless they are beginning pinch or have previously pinch zoomed
@@ -102,7 +109,7 @@ class ReactPinchZoomPan extends Component {
         eventPreventDefault(event)
       }
     })
-    .flatMap((md) => {
+    .mergeMap((md) => {
       const startPoint = normalizeTouch(md)
       const {size} = this.state
 
@@ -113,17 +120,12 @@ class ReactPinchZoomPan extends Component {
         const movePoint = normalizeTouch(mm)
 
         if (hasTwoTouchPoints(mm)) {
-          let scaleFactor
-          if (isTouch()) {
-            scaleFactor = mm.scale
-          } else {
-            scaleFactor = (movePoint.x < (size.width / 2)) ? scale + ((translatePos(startPoint, size).x - translatePos(movePoint, size).x) / size.width) : scale + ((translatePos(movePoint, size).x - translatePos(startPoint, size).x) / size.width)
-          }
-          scaleFactor = between(1, maxScale, scaleFactor)
+          const scaleFactor = (isTouch() && mm.scale) ? mm.scale : (movePoint.x < (size.width / 2)) ? scale + ((translatePos(startPoint, size).x - translatePos(movePoint, size).x) / size.width) : scale + ((translatePos(movePoint, size).x - translatePos(startPoint, size).x) / size.width)
+          const nextScale = between(1, maxScale, scaleFactor)
           return {
-            scale: scaleFactor,
-            x: (scaleFactor < 1.01) ? 0 : x,
-            y: (scaleFactor < 1.01) ? 0 : y
+            scale: nextScale,
+            x: (nextScale < 1.01) ? 0 : x,
+            y: (nextScale < 1.01) ? 0 : y
           }
         } else {
           let scaleFactorX = ((size.width * scale) - size.width) / (maxScale * 2)
@@ -162,18 +164,20 @@ class ReactPinchZoomPan extends Component {
   }
 
   pinchStopped () {
-    this.state.isPinching = false
-    this.pinchTimeoutTimer = null
-    if (this.props.onPinchStop) {
-      this.props.onPinchStop()
-    }
+    this.setState({
+      isPinching: false
+    }, () => {
+      this.pinchTimeoutTimer = null
+      this.props.onPinchStop && this.props.onPinchStop()
+    })
   }
 
   pinchStarted () {
-    this.state.isPinching = true
-    if (this.props.onPinchStart) {
-      this.props.onPinchStart()
-    }
+    this.setState({
+      isPinching: true
+    }, () => {
+      this.props.onPinchStart && this.props.onPinchStart()
+    })
   }
 
   render () {

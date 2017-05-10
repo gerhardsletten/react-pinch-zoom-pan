@@ -39,3 +39,4 @@ node_modules
 lib
 www/bundle.js
 www/style.css
+www/assets/*

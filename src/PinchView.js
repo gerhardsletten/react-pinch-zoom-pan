@@ -1,9 +1,9 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import s from 'react-prefixr'
 import {ReactPinchZoomPan} from './'
 
 class PinchView extends Component {
-
   getContainerStyle () {
     const {backgroundColor, containerRatio} = this.props
     return {

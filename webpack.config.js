@@ -1,12 +1,12 @@
 var path = require('path')
 var webpack = require('webpack')
-var autoprefixer = require('autoprefixer')
-var OpenBrowserPlugin = require('open-browser-webpack-plugin')
 
 module.exports = {
-  devtool: 'eval',
+  devtool: 'inline-source-map',
   entry: [
-    'webpack-dev-server/client?http://localhost:3001',
+    'babel-polyfill',
+    'react-hot-loader/patch',
+    'webpack-dev-server/client?http://0.0.0.0:3001',
     'webpack/hot/only-dev-server',
     './demo/index'
   ],
@@ -16,66 +16,53 @@ module.exports = {
     publicPath: '/'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
-    new OpenBrowserPlugin({ url: 'http://localhost:3001' })
+    new webpack.HotModuleReplacementPlugin()
   ],
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['.js', '.jsx']
+  },
+  devServer: {
+    hot: true,
+    contentBase: './www'
   },
   module: {
-    loaders: [
-      {
-        test: /\.json$/,
-        loader: 'json-loader'
-      },
+    rules: [
       {
         test: /\.js$/,
-        loader: 'react-hot',
-        include: path.join(__dirname, '..'),
-        exclude: /node_modules/
-      },
-      {
-        test: /\.js$/,
-        loader: 'babel',
-        query: {
-          cacheDirectory: true
-        },
-        include: path.join(__dirname, '..'),
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              cacheDirectory: true
+            }
+          },
+          'eslint-loader'
+        ]
       },
       {
         test: /\.css$/,
-        loader: 'style!css!postcss'
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true
+            }
+          }
+        ]
       },
       {
-        test: /\.js$/,
-        loader: 'eslint-loader',
-        exclude: /node_modules/
-      },
-      {
-        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url?limit=10000&mimetype=application/font-woff'
-      },
-      {
-        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url?limit=10000&mimetype=application/font-woff'
-      },
-      {
-        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url?limit=10000&mimetype=application/octet-stream'
-      },
-      {
-        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'file'
-      },
-      {
-        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url?limit=10000&mimetype=image/svg+xml'
+        test: /\.(woff|woff2|ttf|eot|svg|png|jpg)(\?\S*)?$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'assets/[name].[ext]'
+            }
+          }
+        ]
       }
     ]
-  },
-  postcss: () => {
-    return [ autoprefixer({ browsers: [ 'last 2 versions' ] }) ]
   }
 }

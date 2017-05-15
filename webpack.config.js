@@ -19,7 +19,11 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin()
   ],
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
+    modules: [
+      'demo',
+      'node_modules'
+    ]
   },
   devServer: {
     hot: true,
@@ -47,7 +51,7 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              modules: true
+              modules: false
             }
           }
         ]

@@ -75,7 +75,7 @@ class ReactPinchZoomPan extends Component {
 
   componentWillUnmount () {
     if (this.pinchSubscription) {
-      this.pinchSubscription.dispose()
+      this.pinchSubscription = null
     }
     global.removeEventListener('resize', this.resizeThrottled)
   }

@@ -20,7 +20,11 @@ module.exports = {
     })
   ],
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
+    modules: [
+      'demo',
+      'node_modules'
+    ]
   },
   module: {
     rules: [
@@ -43,7 +47,7 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              modules: true
+              modules: false
             }
           }
         ]

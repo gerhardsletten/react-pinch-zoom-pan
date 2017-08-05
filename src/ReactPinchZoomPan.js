@@ -100,9 +100,15 @@ class ReactPinchZoomPan extends Component {
       }
     }
 
+    let startX = 0
+    let startY = 0
+
     const pinch = touchStart
     .do((event) => {
       const {scale} = this.state.obj
+      // record x,y when touch starts
+      startX = this.state.obj.x
+      startY = this.state.obj.y
 
       // allow page scrolling - ignore events unless they are beginning pinch or have previously pinch zoomed
       if (hasTwoTouchPoints(event) || isZoomed(scale)) {
@@ -128,11 +134,11 @@ class ReactPinchZoomPan extends Component {
             y: (nextScale < 1.01) ? 0 : y
           }
         } else {
-          let scaleFactorX = ((size.width * scale) - size.width) / (maxScale * 2)
-          let scaleFactorY = ((size.height * scale) - size.height) / (maxScale * 2)
+          let scaleFactorX = ((size.width * scale) - size.width) / (scale * 2)
+          let scaleFactorY = ((size.height * scale) - size.height) / (scale * 2)
           return {
-            x: between(inverse(scaleFactorX), scaleFactorX, movePoint.x - startPoint.x),
-            y: between(inverse(scaleFactorY), scaleFactorY, movePoint.y - startPoint.y)
+            x: between(inverse(scaleFactorX), scaleFactorX, movePoint.x - startPoint.x + startX),
+            y: between(inverse(scaleFactorY), scaleFactorY, movePoint.y - startPoint.y + startY)
           }
         }
       })

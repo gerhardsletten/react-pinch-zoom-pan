@@ -62,8 +62,8 @@ class ReactPinchZoomPan extends Component {
   }
 
   resize () {
-    if (this.refs.root) {
-      const domNode = this.refs.root
+    if (this.root) {
+      const domNode = this.root
       this.setState({
         size: {
           width: domNode.offsetWidth,
@@ -88,7 +88,7 @@ class ReactPinchZoomPan extends Component {
   }
 
   handlePinch () {
-    const domNode = this.refs.root
+    const domNode = this.root
     const touchStart = Observable.fromEvent(domNode, (isTouch()) ? 'touchstart' : 'mousedown')
     const touchMove = Observable.fromEvent(window, (isTouch()) ? 'touchmove' : 'mousemove')
     const touchEnd = Observable.fromEvent(window, (isTouch()) ? 'touchend' : 'mouseup')
@@ -189,7 +189,7 @@ class ReactPinchZoomPan extends Component {
   render () {
     const {scale, x, y} = this.state.obj
     return (
-      <div ref='root'>
+      <div ref={root => { this.root = root }}>
         {this.props.render({
           x: x.toFixed(2),
           y: y.toFixed(2),

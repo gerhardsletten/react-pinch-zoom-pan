@@ -1,7 +1,2 @@
-import PinchView from './PinchView'
-import ReactPinchZoomPan from './ReactPinchZoomPan'
-
-export {
-  PinchView,
-  ReactPinchZoomPan
-}
+export { default as PinchView } from './PinchView'
+export { default as ReactPinchZoomPan } from './ReactPinchZoomPan'

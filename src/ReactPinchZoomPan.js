@@ -87,6 +87,13 @@ class ReactPinchZoomPan extends Component {
     global.addEventListener('resize', this.resizeThrottled)
   }
 
+  componentWillReceiveProps (nextProps) {
+    if (this.state.obj.scale !== nextProps.initialScale) {
+      const obj = {...this.state.obj, scale: nextProps.initialScale}
+      this.setState({ obj })
+    }
+  }
+
   handlePinch () {
     const domNode = this.root
     const touchStart = Observable.fromEvent(domNode, (isTouch()) ? 'touchstart' : 'mousedown')

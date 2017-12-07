@@ -54,15 +54,23 @@ export default class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      selectedTab: tabs[0].id
+      selectedTab: tabs[0].id,
+      zoomed: false
     }
   }
   onChangeTab = (selectedTab) => {
     this.setState({selectedTab})
   }
+  onDblClick = (e) => {
+    e.preventDefault()
+    if (this.state.selectedTab === 'tab-3') {
+      this.setState({ zoomed: !this.state.zoomed })
+    }
+  }
   render () {
-    const {selectedTab} = this.state
+    const {selectedTab, zoomed} = this.state
     const selectedTabContent = tabs.find(({id}) => id === selectedTab)
+    const initialScale = selectedTabContent.initialScale * (zoomed ? 1.5 : 1)
     return (
       <div>
         <section className='hero is-primary'>
@@ -84,7 +92,7 @@ export default class App extends Component {
               {tabs.map((tab, i) => <TabButton key={i} {...tab} onClick={this.onChangeTab} className={selectedTabContent && tab.id === selectedTabContent.id ? 'is-active' : ''} />)}
             </ul>
           </div>
-          {selectedTabContent && this.renderTabContent(selectedTabContent)}
+          {selectedTabContent && this.renderTabContent({...selectedTabContent, initialScale})}
         </div>
       </div>
     )
@@ -109,7 +117,7 @@ export default class App extends Component {
         <p>{text}</p>
         <div className='pinch-wrapper'>
           <PinchView debug backgroundColor='#ddd' maxScale={maxScale} initialScale={initialScale} containerRatio={containerRatio} onPinchStart={() => console.log('pinch started')}>
-            <img src={image} style={styles} />
+            <img src={image} style={styles} onDoubleClick={this.onDblClick} />
           </PinchView>
         </div>
       </div>

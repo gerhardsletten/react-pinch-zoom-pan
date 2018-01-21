@@ -37,7 +37,7 @@ class App extends Component {
 }
 ```
 
-### Usage underlaying zoom widget (PinchPanZoom)
+### Usage underlaying zoom widget (ReactPinchZoomPan)
 
 Take a look at demo/App.js for usage, you can also run it in your local enviroment by 
 
@@ -48,7 +48,7 @@ and open [localhost:3001](http://localhost:3001)
 ```
 import React, {Component} from 'react'
 import s from 'react-prefixr'
-import {ReactPinchPanZoom} from 'react-pinch-zoom-pan'
+import {ReactPinchZoomPan} from 'react-pinch-zoom-pan'
 
 export default class App extends Component {
   
@@ -76,7 +76,7 @@ export default class App extends Component {
     const {height,width} = this.props
     const ratio = (height / width) * 100
     return (
-      <ReactPinchPanZoom maxScale={2} render={obj => {
+      <ReactPinchZoomPan maxScale={2} render={obj => {
         return (
           <div style={this.getContainerStyle(ratio)}>
             <div style={this.getInnerStyle()}>
@@ -126,6 +126,6 @@ The component exposes a prop to set the `initialScale`. This can be used to disp
 
 ## Discussion
 
-* My experience with rxjs, see `src/ReactPinchPanZoom.js` if you have any suggestions and submit a pull request.
+* My experience with rxjs is limited, see `src/ReactPinchZoomPan.js` if you have any suggestions and submit a pull request.
 
 Thanks to [Hugo Bessaa](https://github.com/hugobessaa) and [rx-react-pinch](https://github.com/hugobessaa/rx-react-pinch) for inital idea, but it had no support for panning and desktop.

@@ -85,6 +85,10 @@ class ReactPinchZoomPan extends Component {
     this.resize()
     this.resizeThrottled = throttle(() => this.resize(), 500)
     global.addEventListener('resize', this.resizeThrottled)
+
+    const {x, y} = this.props.initialCenter
+    const { obj } = this.state
+    this.setState({obj: {...obj, x, y}}, ()=>console.log(`saved state obj`))
   }
 
   componentWillReceiveProps (nextProps) {
@@ -209,7 +213,8 @@ class ReactPinchZoomPan extends Component {
 
 ReactPinchZoomPan.defaultProps = {
   initialScale: 1,
-  maxScale: 2
+  maxScale: 2,
+  initialCenter: {x: -100, y: 50}
 }
 
 ReactPinchZoomPan.propTypes = {
@@ -217,6 +222,7 @@ ReactPinchZoomPan.propTypes = {
   onPinchStart: PropTypes.func,
   onPinchStop: PropTypes.func,
   initialScale: PropTypes.number,
+  initialCenter: PropTypes.object,
   maxScale: PropTypes.number
 }
 

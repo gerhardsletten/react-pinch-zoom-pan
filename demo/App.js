@@ -54,7 +54,8 @@ export default class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      selectedTab: tabs[0].id,
+      // selectedTab: tabs[0].id,
+      selectedTab: tabs[3].id,
       zoomed: false
     }
   }

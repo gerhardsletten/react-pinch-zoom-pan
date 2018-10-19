@@ -48,6 +48,19 @@ const tabs = [{
     width: '100%',
     height: 'auto'
   }
+}, {
+  id: 'tab-4',
+  image: imageHorizontal2,
+  containerRatio: ((400 / 600) * 100),
+  maxScale: 5,
+  initialScale: 3,
+  label: 'Double-click',
+  text: 'This allows you to zoom to a double-click location',
+  styles: {
+    margin: 'auto',
+    width: '100%',
+    height: 'auto'
+  }
 }]
 
 export default class App extends Component {
@@ -55,7 +68,7 @@ export default class App extends Component {
     super(props)
     this.state = {
       // selectedTab: tabs[0].id,
-      selectedTab: tabs[3].id,
+      selectedTab: tabs[4].id,
       zoomed: false,
       initialCenter: {x: 0, y: 50}
     }
@@ -64,16 +77,10 @@ export default class App extends Component {
     this.setState({selectedTab})
   }
   onDblClick = (e) => {
-    e.preventDefault()
+    // e.preventDefault()
     // if (this.state.selectedTab === 'tab-3') {
     //   this.setState({ zoomed: !this.state.zoomed })
     // }
-    const { clientX: x, clientY: y } = e
-    console.log(`App.js/onDblClick() x: ${x}, y: ${y}`)
-    this.setState({initialCenter: {x, y}})
-
-    console.log(this.div.getBoundingClientRect())
-    this.div.id='foobar'
   }
   render () {
     const {selectedTab, zoomed, initialCenter} = this.state

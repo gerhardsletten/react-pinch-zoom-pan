@@ -204,10 +204,37 @@ class ReactPinchZoomPan extends Component {
     })
   }
 
+  onDoubleClick(e){
+    // handle zoom to double-click coordinates
+    const { clientX, clientY } = e
+    const bounds = this.root.getBoundingClientRect()
+    console.log('hi')
+    const { top, left, bottom, right, width, height } = bounds
+    // find the center of the image
+    const divCenter = { x: (right-left)/2 + left, y: (bottom-top)/2 + top,  }
+    // click offset is in image space (might have to flip)
+    const initialCenter = { x: divCenter.x - clientX, y: divCenter.y - clientY}
+    // limit offset to bounds
+    initialCenter.x = Math.abs(initialCenter.x) > width/4 ? (width/4)*Math.sign(initialCenter.x) : initialCenter.x
+    initialCenter.y = Math.abs(initialCenter.y) > height/4 ? (height/4)*Math.sign(initialCenter.y) : initialCenter.y
+    // save the new center to state
+    const {x, y} = initialCenter
+    const { obj } = this.state
+
+    console.log(bounds)
+    console.log(divCenter)
+    console.log(initialCenter)
+
+    this.setState({obj: {...obj, x, y}})
+  }
+
   render () {
     const {scale, x, y} = this.state.obj
     return (
-      <div ref={root => { this.root = root }}>
+      <div 
+        ref={root => { this.root = root }}
+        onDoubleClick={this.onDoubleClick.bind(this)}
+      >
         {this.props.render({
           x: x.toFixed(2),
           y: y.toFixed(2),
@@ -221,7 +248,7 @@ class ReactPinchZoomPan extends Component {
 ReactPinchZoomPan.defaultProps = {
   initialScale: 1,
   maxScale: 2,
-  initialCenter: {x: -100, y: 50}
+  initialCenter: {x: 0, y: 0}
 }
 
 ReactPinchZoomPan.propTypes = {

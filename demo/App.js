@@ -128,7 +128,7 @@ export default class App extends Component {
     return (
       <div className='content'>
         <p>{text}</p>
-        <div className='pinch-wrapper' ref={ref => { this.div = ref }}>
+        <div className='pinch-wrapper'>
           <PinchView debug backgroundColor='#ddd' maxScale={maxScale} initialScale={initialScale} containerRatio={containerRatio} onPinchStart={() => console.log('pinch started')}>
             <img src={image} style={styles} onDoubleClick={this.onDblClick} />
           </PinchView>

@@ -53,7 +53,7 @@ const tabs = [{
   image: imageHorizontal2,
   containerRatio: ((400 / 600) * 100),
   maxScale: 5,
-  initialScale: 2,
+  initialScale: 1,
   label: 'Double click',
   text: 'This allows you to zoom to a double-click location',
   styles: {
@@ -70,7 +70,7 @@ export default class App extends Component {
       // selectedTab: tabs[0].id,
       selectedTab: tabs[4].id,
       zoomed: false,
-      initialCenter: {x: 0, y: 50}
+      initialCenter: {x: 0, y: 0}
     }
   }
   onChangeTab = (selectedTab) => {

@@ -207,16 +207,18 @@ class ReactPinchZoomPan extends Component {
 
   // handle zoom to double-click coordinates
   onDoubleClick(e){
-    // if zoomedin, just zoom out
     const { obj } = this.state
     const {scale} = obj
+    // zoom out or zoom in
     if(isZoomed(scale)){
       // reset the zoom and center on the obj
       this.setState({obj: {...obj, scale: 1, x: 0, y: 0}})
     }else{
-      // not zoomed in yet, do the zoom now
+      // read event coordinates
       const { clientX, clientY } = e
+      // get the bounding box for the content
       const bounds = this.root.getBoundingClientRect()
+      // unpack the bounding box
       const { top, left, bottom, right, width, height } = bounds
       // find the center of the image
       const divCenter = { x: (right-left)/2 + left, y: (bottom-top)/2 + top,  }
@@ -227,7 +229,8 @@ class ReactPinchZoomPan extends Component {
       initialCenter.y = Math.abs(initialCenter.y) > height/4 ? (height/4)*Math.sign(initialCenter.y) : initialCenter.y
       // save the new center to state
       const {x, y} = initialCenter
-      this.setState({obj: {...obj, x, y}})
+      // zoom in and re-center
+      this.setState({obj: {...obj, x, y, scale: this.props.maxScale}})
       // console.log(bounds)
       // console.log(divCenter)
       // console.log(initialCenter)

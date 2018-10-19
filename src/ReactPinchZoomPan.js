@@ -206,14 +206,14 @@ class ReactPinchZoomPan extends Component {
   }
 
   // handle zoom to double-click coordinates
-  onDoubleClick(e){
+  onDoubleClick (e) {
     const { obj } = this.state
     const {scale} = obj
     // zoom out or zoom in
-    if(isZoomed(scale)){
+    if (isZoomed(scale)) {
       // reset the zoom and center on the obj
       this.setState({obj: {...obj, scale: 1, x: 0, y: 0}})
-    }else{
+    } else {
       // read event coordinates
       const { clientX, clientY } = e
       // get the bounding box for the content
@@ -221,12 +221,12 @@ class ReactPinchZoomPan extends Component {
       // unpack the bounding box
       const { top, left, bottom, right, width, height } = bounds
       // find the center of the image
-      const divCenter = { x: (right-left)/2 + left, y: (bottom-top)/2 + top,  }
+      const divCenter = { x: (right - left) / 2 + left, y: (bottom - top) / 2 + top }
       // click offset is in image space (might have to flip)
-      const initialCenter = { x: divCenter.x - clientX, y: divCenter.y - clientY}
+      const initialCenter = {x: divCenter.x - clientX, y: divCenter.y - clientY}
       // limit offset to bounds
-      initialCenter.x = Math.abs(initialCenter.x) > width/4 ? (width/4)*Math.sign(initialCenter.x) : initialCenter.x
-      initialCenter.y = Math.abs(initialCenter.y) > height/4 ? (height/4)*Math.sign(initialCenter.y) : initialCenter.y
+      initialCenter.x = Math.abs(initialCenter.x) > width / 4 ? (width / 4) * Math.sign(initialCenter.x) : initialCenter.x
+      initialCenter.y = Math.abs(initialCenter.y) > height / 4 ? (height / 4) * Math.sign(initialCenter.y) : initialCenter.y
       // save the new center to state
       const {x, y} = initialCenter
       // zoom in and re-center
@@ -240,9 +240,9 @@ class ReactPinchZoomPan extends Component {
   render () {
     const {scale, x, y} = this.state.obj
     return (
-      <div 
+      <div
         ref={root => { this.root = root }}
-        onDoubleClick={this.onDoubleClick.bind(this)}
+        onDoubleClick={e => this.onDoubleClick(e)}
       >
         {this.props.render({
           x: x.toFixed(2),

@@ -67,10 +67,8 @@ export default class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      // selectedTab: tabs[0].id,
-      selectedTab: tabs[4].id,
-      zoomed: false,
-      initialCenter: {x: 0, y: 0}
+      selectedTab: tabs[0].id,
+      zoomed: false
     }
   }
   onChangeTab = (selectedTab) => {
@@ -83,7 +81,7 @@ export default class App extends Component {
     }
   }
   render () {
-    const {selectedTab, zoomed, initialCenter} = this.state
+    const {selectedTab, zoomed} = this.state
     const selectedTabContent = tabs.find(({id}) => id === selectedTab)
     const initialScale = selectedTabContent.initialScale * (zoomed ? 1.5 : 1)
     return (
@@ -107,7 +105,7 @@ export default class App extends Component {
               {tabs.map((tab, i) => <TabButton key={i} {...tab} onClick={this.onChangeTab} className={selectedTabContent && tab.id === selectedTabContent.id ? 'is-active' : ''} />)}
             </ul>
           </div>
-          {selectedTabContent && this.renderTabContent({...selectedTabContent, initialScale, initialCenter})}
+          {selectedTabContent && this.renderTabContent({...selectedTabContent, initialScale})}
         </div>
       </div>
     )
@@ -123,15 +121,15 @@ export default class App extends Component {
       </div>
     )
   }
-  renderTabContent ({maxScale, containerRatio, image, initialScale, initialCenter, text, styles}) {
+  renderTabContent ({maxScale, containerRatio, image, initialScale, text, styles}) {
     if (!image) {
       return this.renderUsage()
     }
     return (
       <div className='content'>
         <p>{text}</p>
-        <div className='pinch-wrapper' ref={ref=>this.div=ref}>
-          <PinchView debug backgroundColor='#ddd' initialCenter={initialCenter} maxScale={maxScale} initialScale={initialScale} containerRatio={containerRatio} onPinchStart={() => console.log('pinch started')}>
+        <div className='pinch-wrapper' ref={ref => { this.div = ref }}>
+          <PinchView debug backgroundColor='#ddd' maxScale={maxScale} initialScale={initialScale} containerRatio={containerRatio} onPinchStart={() => console.log('pinch started')}>
             <img src={image} style={styles} onDoubleClick={this.onDblClick} />
           </PinchView>
         </div>

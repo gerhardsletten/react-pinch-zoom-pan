@@ -56,8 +56,7 @@ class ReactPinchZoomPan extends Component {
         y: 0
       },
       isPinching: false,
-      isPanning: false,
-      zoomed: false
+      isPanning: false
     }
     this.pinchTimeoutTimer = null
   }

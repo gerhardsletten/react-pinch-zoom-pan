@@ -123,6 +123,32 @@ The component exposes a prop to set the `initialScale`. This can be used to disp
   }} />
 </PinchView>
 ```
+### Usage initial center
+
+The component lets you set `initialCenter`. The value must be an object with ```x``` and ```y``` like so: ```{x: -100, y: 50}```. Use it if you want to zoom in on a certain point:
+
+```
+<PinchView debug backgroundColor='#ddd' initialCenter={{x: -100, y: 50}} initalScale={2} maxScale={4} containerRatio={100}>
+  <img src={'http://lorempixel.com/400/600/nature/'} style={{
+    margin: 'auto',
+    width: 'auto',
+    height: '100%'
+  }} />
+</PinchView>
+```
+### Usage zoomToDoubleClick
+
+You can zoom to a specific location on double-clicks. The value is ```true/false```, default is ```false```. Use it to enable automatic zooming to ```maxScale```. There is an example in the demo under the 'Double click' tab.
+
+```
+<PinchView debug zoomToDoubleClick backgroundColor='#ddd' initalScale={1} maxScale={5} containerRatio={100}>
+  <img src={'http://lorempixel.com/400/600/nature/'} style={{
+    margin: 'auto',
+    width: 'auto',
+    height: '100%'
+  }} />
+</PinchView>
+```
 
 ## Discussion
 

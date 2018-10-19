@@ -48,6 +48,20 @@ const tabs = [{
     width: '100%',
     height: 'auto'
   }
+}, {
+  id: 'tab-4',
+  image: imageHorizontal,
+  containerRatio: ((400 / 600) * 100),
+  maxScale: 5,
+  initialScale: 1,
+  label: 'Double click',
+  text: 'This allows you to zoom to a double-click location',
+  styles: {
+    margin: 'auto',
+    width: '100%',
+    height: 'auto'
+  },
+  zoomToDoubleClick: true
 }]
 
 export default class App extends Component {
@@ -108,7 +122,7 @@ export default class App extends Component {
       </div>
     )
   }
-  renderTabContent ({maxScale, containerRatio, image, initialScale, text, styles}) {
+  renderTabContent ({maxScale, containerRatio, image, initialScale, text, styles, zoomToDoubleClick}) {
     if (!image) {
       return this.renderUsage()
     }
@@ -116,7 +130,7 @@ export default class App extends Component {
       <div className='content'>
         <p>{text}</p>
         <div className='pinch-wrapper'>
-          <PinchView debug backgroundColor='#ddd' maxScale={maxScale} initialScale={initialScale} containerRatio={containerRatio} onPinchStart={() => console.log('pinch started')}>
+          <PinchView debug zoomToDoubleClick={zoomToDoubleClick} backgroundColor='#ddd' maxScale={maxScale} initialScale={initialScale} containerRatio={containerRatio} onPinchStart={() => console.log('pinch started')}>
             <img src={image} style={styles} onDoubleClick={this.onDblClick} />
           </PinchView>
         </div>

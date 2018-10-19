@@ -51,9 +51,9 @@ class PinchView extends Component {
   }
 
   render () {
-    const {debug, initialScale, maxScale, holderClassName, containerClassName, children, onPinchStart, onPinchStop} = this.props
+    const {debug, initialScale, initialCenter, maxScale, holderClassName, containerClassName, children, onPinchStart, onPinchStop, zoomToDoubleClick} = this.props
     return (
-      <ReactPinchZoomPan initialScale={initialScale} maxScale={maxScale} render={(obj) => {
+      <ReactPinchZoomPan zoomToDoubleClick={zoomToDoubleClick} initialCenter={initialCenter} initialScale={initialScale} maxScale={maxScale} render={(obj) => {
         return (
           <div style={this.getHolderStyle()} className={holderClassName}>
             <div style={this.getContainerStyle()} className={containerClassName}>
@@ -76,12 +76,14 @@ PinchView.defaultProps = {
   maxScale: 2,
   containerRatio: 100,
   backgroundColor: '#f2f2f2',
-  debug: false
+  debug: false,
+  zoomToDoubleClick: false
 }
 
 PinchView.propTypes = {
   containerRatio: PropTypes.number,
   initialScale: PropTypes.number,
+  initialCenter: PropTypes.object,
   maxScale: PropTypes.number,
   children: PropTypes.element,
   containerClassName: PropTypes.string,
@@ -89,7 +91,8 @@ PinchView.propTypes = {
   backgroundColor: PropTypes.string,
   debug: PropTypes.bool,
   onPinchStart: PropTypes.func,
-  onPinchStop: PropTypes.func
+  onPinchStop: PropTypes.func,
+  zoomToDoubleClick: PropTypes.bool
 }
 
 export default PinchView

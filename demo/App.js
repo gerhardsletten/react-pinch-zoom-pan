@@ -71,6 +71,9 @@ export default class App extends Component {
     const { clientX: x, clientY: y } = e
     console.log(`App.js/onDblClick() x: ${x}, y: ${y}`)
     this.setState({initialCenter: {x, y}})
+
+    console.log(this.div.getBoundingClientRect())
+    this.div.id='foobar'
   }
   render () {
     const {selectedTab, zoomed, initialCenter} = this.state
@@ -120,7 +123,7 @@ export default class App extends Component {
     return (
       <div className='content'>
         <p>{text}</p>
-        <div className='pinch-wrapper'>
+        <div className='pinch-wrapper' ref={ref=>this.div=ref}>
           <PinchView debug backgroundColor='#ddd' initialCenter={initialCenter} maxScale={maxScale} initialScale={initialScale} containerRatio={containerRatio} onPinchStart={() => console.log('pinch started')}>
             <img src={image} style={styles} onDoubleClick={this.onDblClick} />
           </PinchView>

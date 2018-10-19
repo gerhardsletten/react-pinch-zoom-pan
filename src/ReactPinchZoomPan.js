@@ -230,18 +230,16 @@ class ReactPinchZoomPan extends Component {
       const {x, y} = initialCenter
       // zoom in and re-center
       this.setState({obj: {...obj, x, y, scale: this.props.maxScale}})
-      // console.log(bounds)
-      // console.log(divCenter)
-      // console.log(initialCenter)
     }
   }
 
   render () {
+    const { zoomToDoubleClick } = this.props
     const {scale, x, y} = this.state.obj
     return (
       <div
         ref={root => { this.root = root }}
-        onDoubleClick={e => this.onDoubleClick(e)}
+        onDoubleClick={zoomToDoubleClick ? e => this.onDoubleClick(e) : null}
       >
         {this.props.render({
           x: x.toFixed(2),
@@ -256,7 +254,8 @@ class ReactPinchZoomPan extends Component {
 ReactPinchZoomPan.defaultProps = {
   initialScale: 1,
   maxScale: 2,
-  initialCenter: {x: 0, y: 0}
+  initialCenter: {x: 0, y: 0},
+  zoomToDoubleClick: false
 }
 
 ReactPinchZoomPan.propTypes = {
@@ -265,7 +264,8 @@ ReactPinchZoomPan.propTypes = {
   onPinchStop: PropTypes.func,
   initialScale: PropTypes.number,
   initialCenter: PropTypes.object,
-  maxScale: PropTypes.number
+  maxScale: PropTypes.number,
+  zoomToDoubleClick: PropTypes.bool
 }
 
 export default ReactPinchZoomPan

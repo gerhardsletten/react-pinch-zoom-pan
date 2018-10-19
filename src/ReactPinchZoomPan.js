@@ -86,14 +86,21 @@ class ReactPinchZoomPan extends Component {
     this.resizeThrottled = throttle(() => this.resize(), 500)
     global.addEventListener('resize', this.resizeThrottled)
 
+    // save initial center to state
     const {x, y} = this.props.initialCenter
     const { obj } = this.state
-    this.setState({obj: {...obj, x, y}}, ()=>console.log(`saved state obj`))
+    this.setState({obj: {...obj, x, y}})
   }
 
   componentWillReceiveProps (nextProps) {
+    // update when parent changes scale
     if (this.state.obj.scale !== nextProps.initialScale) {
       const obj = {...this.state.obj, scale: nextProps.initialScale}
+      this.setState({ obj })
+    }
+    // update when parent changes center coordinates
+    if (this.state.obj.x !== nextProps.initialCenter.x || this.state.obj.y !== nextProps.initialCenter.y) {
+      const obj = {...this.state.obj, x: nextProps.initialCenter.x, y: nextProps.initialCenter.y}
       this.setState({ obj })
     }
   }

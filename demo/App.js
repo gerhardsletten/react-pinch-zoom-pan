@@ -56,7 +56,8 @@ export default class App extends Component {
     this.state = {
       // selectedTab: tabs[0].id,
       selectedTab: tabs[3].id,
-      zoomed: false
+      zoomed: false,
+      initialCenter: {x: 0, y: 50}
     }
   }
   onChangeTab = (selectedTab) => {
@@ -64,12 +65,15 @@ export default class App extends Component {
   }
   onDblClick = (e) => {
     e.preventDefault()
-    if (this.state.selectedTab === 'tab-3') {
-      this.setState({ zoomed: !this.state.zoomed })
-    }
+    // if (this.state.selectedTab === 'tab-3') {
+    //   this.setState({ zoomed: !this.state.zoomed })
+    // }
+    const { clientX: x, clientY: y } = e
+    console.log(`App.js/onDblClick() x: ${x}, y: ${y}`)
+    this.setState({initialCenter: {x, y}})
   }
   render () {
-    const {selectedTab, zoomed} = this.state
+    const {selectedTab, zoomed, initialCenter} = this.state
     const selectedTabContent = tabs.find(({id}) => id === selectedTab)
     const initialScale = selectedTabContent.initialScale * (zoomed ? 1.5 : 1)
     return (
@@ -93,7 +97,7 @@ export default class App extends Component {
               {tabs.map((tab, i) => <TabButton key={i} {...tab} onClick={this.onChangeTab} className={selectedTabContent && tab.id === selectedTabContent.id ? 'is-active' : ''} />)}
             </ul>
           </div>
-          {selectedTabContent && this.renderTabContent({...selectedTabContent, initialScale})}
+          {selectedTabContent && this.renderTabContent({...selectedTabContent, initialScale, initialCenter})}
         </div>
       </div>
     )
@@ -109,7 +113,7 @@ export default class App extends Component {
       </div>
     )
   }
-  renderTabContent ({maxScale, containerRatio, image, initialScale, text, styles}) {
+  renderTabContent ({maxScale, containerRatio, image, initialScale, initialCenter, text, styles}) {
     if (!image) {
       return this.renderUsage()
     }
@@ -117,7 +121,7 @@ export default class App extends Component {
       <div className='content'>
         <p>{text}</p>
         <div className='pinch-wrapper'>
-          <PinchView debug backgroundColor='#ddd' maxScale={maxScale} initialScale={initialScale} containerRatio={containerRatio} onPinchStart={() => console.log('pinch started')}>
+          <PinchView debug backgroundColor='#ddd' initialCenter={initialCenter} maxScale={maxScale} initialScale={initialScale} containerRatio={containerRatio} onPinchStart={() => console.log('pinch started')}>
             <img src={image} style={styles} onDoubleClick={this.onDblClick} />
           </PinchView>
         </div>

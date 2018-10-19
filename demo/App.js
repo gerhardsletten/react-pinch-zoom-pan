@@ -50,7 +50,7 @@ const tabs = [{
   }
 }, {
   id: 'tab-4',
-  image: imageHorizontal2,
+  image: imageHorizontal,
   containerRatio: ((400 / 600) * 100),
   maxScale: 5,
   initialScale: 1,

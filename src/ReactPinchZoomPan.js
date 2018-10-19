@@ -208,7 +208,6 @@ class ReactPinchZoomPan extends Component {
     // handle zoom to double-click coordinates
     const { clientX, clientY } = e
     const bounds = this.root.getBoundingClientRect()
-    console.log('hi')
     const { top, left, bottom, right, width, height } = bounds
     // find the center of the image
     const divCenter = { x: (right-left)/2 + left, y: (bottom-top)/2 + top,  }

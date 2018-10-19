@@ -53,8 +53,8 @@ const tabs = [{
   image: imageHorizontal2,
   containerRatio: ((400 / 600) * 100),
   maxScale: 5,
-  initialScale: 3,
-  label: 'Double-click',
+  initialScale: 2,
+  label: 'Double click',
   text: 'This allows you to zoom to a double-click location',
   styles: {
     margin: 'auto',
@@ -77,10 +77,10 @@ export default class App extends Component {
     this.setState({selectedTab})
   }
   onDblClick = (e) => {
-    // e.preventDefault()
-    // if (this.state.selectedTab === 'tab-3') {
-    //   this.setState({ zoomed: !this.state.zoomed })
-    // }
+    e.preventDefault()
+    if (this.state.selectedTab === 'tab-3') {
+      this.setState({ zoomed: !this.state.zoomed })
+    }
   }
   render () {
     const {selectedTab, zoomed, initialCenter} = this.state

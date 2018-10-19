@@ -56,7 +56,8 @@ class ReactPinchZoomPan extends Component {
         y: 0
       },
       isPinching: false,
-      isPanning: false
+      isPanning: false,
+      zoomed: false
     }
     this.pinchTimeoutTimer = null
   }
@@ -204,27 +205,33 @@ class ReactPinchZoomPan extends Component {
     })
   }
 
+  // handle zoom to double-click coordinates
   onDoubleClick(e){
-    // handle zoom to double-click coordinates
-    const { clientX, clientY } = e
-    const bounds = this.root.getBoundingClientRect()
-    const { top, left, bottom, right, width, height } = bounds
-    // find the center of the image
-    const divCenter = { x: (right-left)/2 + left, y: (bottom-top)/2 + top,  }
-    // click offset is in image space (might have to flip)
-    const initialCenter = { x: divCenter.x - clientX, y: divCenter.y - clientY}
-    // limit offset to bounds
-    initialCenter.x = Math.abs(initialCenter.x) > width/4 ? (width/4)*Math.sign(initialCenter.x) : initialCenter.x
-    initialCenter.y = Math.abs(initialCenter.y) > height/4 ? (height/4)*Math.sign(initialCenter.y) : initialCenter.y
-    // save the new center to state
-    const {x, y} = initialCenter
+    // if zoomedin, just zoom out
     const { obj } = this.state
-
-    console.log(bounds)
-    console.log(divCenter)
-    console.log(initialCenter)
-
-    this.setState({obj: {...obj, x, y}})
+    const {scale} = obj
+    if(isZoomed(scale)){
+      // reset the zoom and center on the obj
+      this.setState({obj: {...obj, scale: 1, x: 0, y: 0}})
+    }else{
+      // not zoomed in yet, do the zoom now
+      const { clientX, clientY } = e
+      const bounds = this.root.getBoundingClientRect()
+      const { top, left, bottom, right, width, height } = bounds
+      // find the center of the image
+      const divCenter = { x: (right-left)/2 + left, y: (bottom-top)/2 + top,  }
+      // click offset is in image space (might have to flip)
+      const initialCenter = { x: divCenter.x - clientX, y: divCenter.y - clientY}
+      // limit offset to bounds
+      initialCenter.x = Math.abs(initialCenter.x) > width/4 ? (width/4)*Math.sign(initialCenter.x) : initialCenter.x
+      initialCenter.y = Math.abs(initialCenter.y) > height/4 ? (height/4)*Math.sign(initialCenter.y) : initialCenter.y
+      // save the new center to state
+      const {x, y} = initialCenter
+      this.setState({obj: {...obj, x, y}})
+      // console.log(bounds)
+      // console.log(divCenter)
+      // console.log(initialCenter)
+    }
   }
 
   render () {

@@ -1,7 +1,7 @@
 {
-  "name": "react-pinch-zoom-pan2",
+  "name": "react-pinch-zoom-pan",
   "version": "1.4.5",
-  "description": "A react component that lets you add pinch-zoom and pan sub components created by gerhardsletten",
+  "description": "A react component that lets you add pinch-zoom and pan sub components",
   "main": "lib/index.js",
   "scripts": {
     "compile": "babel --presets es2015,react --optional runtime -d lib/ src/",

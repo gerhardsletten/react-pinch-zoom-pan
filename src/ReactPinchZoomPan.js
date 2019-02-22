@@ -133,33 +133,32 @@ class ReactPinchZoomPan extends Component {
         const movePoint = normalizeTouch(mm)
 
         if (hasTwoTouchPoints(mm)) {
-          var scaleFactor = initialScale;
-          var nextScale = scaleFactor;
-          if(stayZoom){
-            scaleFactor =  movePoint.x < size.width / 2 ? scale + (translatePos(startPoint, size).x - translatePos(movePoint, size).x) / size.width : scale + (translatePos(movePoint, size).x - translatePos(startPoint, size).x) / size.width;
-            nextScale = between(1, maxScale, scaleFactor);
+          var scaleFactor = initialScale
+          var nextScale = scaleFactor
+          if (stayZoom) {
+            scaleFactor = movePoint.x < size.width / 2 ? scale + (translatePos(startPoint, size).x - translatePos(movePoint, size).x) / size.width : scale + (translatePos(movePoint, size).x - translatePos(startPoint, size).x) / size.width
+            nextScale = between(1, maxScale, scaleFactor)
 
-            if(mm.scale <= scaleFactor){
-              if(mm.scale < 1){
-                nextScale = scaleFactor - (mm.scale/10);
-              }else{
-                nextScale = scaleFactor;
+            if (mm.scale <= scaleFactor) {
+              if (mm.scale < 1) {
+                nextScale = scaleFactor - (mm.scale / 10)
+              } else {
+                nextScale = scaleFactor
               }
-            } else{
-              nextScale = mm.scale;
-            } 
-            
-            if(nextScale < 1){
-              nextScale = 1;
-            }else if(nextScale > maxScale){
-              nextScale = maxScale;
+            } else {
+              nextScale = mm.scale
             }
 
-          }else{
+            if (nextScale < 1) {
+              nextScale = 1
+            } else if (nextScale > maxScale) {
+              nextScale = maxScale
+            }
+          } else {
             scaleFactor = (isTouch() && mm.scale) ? mm.scale : (movePoint.x < (size.width / 2)) ? scale + ((translatePos(startPoint, size).x - translatePos(movePoint, size).x) / size.width) : scale + ((translatePos(movePoint, size).x - translatePos(startPoint, size).x) / size.width)
             nextScale = between(1, maxScale, scaleFactor)
           }
-          
+
           return {
             scale: nextScale,
             x: (nextScale < 1.01) ? 0 : x,

@@ -51,9 +51,9 @@ class PinchView extends Component {
   }
 
   render () {
-    const {debug, initialScale, maxScale, holderClassName, containerClassName, children, onPinchStart, onPinchStop} = this.props
+    const {debug, stayZoom, initialScale, maxScale, holderClassName, containerClassName, children, onPinchStart, onPinchStop} = this.props
     return (
-      <ReactPinchZoomPan initialScale={initialScale} maxScale={maxScale} render={(obj) => {
+      <ReactPinchZoomPan stayZoom={stayZoom} initialScale={initialScale} maxScale={maxScale} render={(obj) => {
         return (
           <div style={this.getHolderStyle()} className={holderClassName}>
             <div style={this.getContainerStyle()} className={containerClassName}>
@@ -76,7 +76,8 @@ PinchView.defaultProps = {
   maxScale: 2,
   containerRatio: 100,
   backgroundColor: '#f2f2f2',
-  debug: false
+  debug: false,
+  stayZoom: true
 }
 
 PinchView.propTypes = {
@@ -88,6 +89,7 @@ PinchView.propTypes = {
   holderClassName: PropTypes.string,
   backgroundColor: PropTypes.string,
   debug: PropTypes.bool,
+  stayZoom: PropTypes.bool,
   onPinchStart: PropTypes.func,
   onPinchStop: PropTypes.func
 }

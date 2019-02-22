@@ -16,6 +16,7 @@ const tabs = [{
   image: imageHorizontal,
   containerRatio: ((400 / 600) * 100),
   maxScale: 3,
+  stayZoom: true,
   label: 'Horizontal Image',
   text: `Set containerRatio to the same ratio as the image : ${((400 / 600) * 100).toFixed(2)}`,
   styles: {
@@ -28,6 +29,7 @@ const tabs = [{
   image: imageVertical,
   containerRatio: 100,
   maxScale: 3,
+  stayZoom: true,
   label: 'Vertical Image',
   text: 'Where containerRatio is set to 100 (equal height and width)',
   styles: {
@@ -40,6 +42,7 @@ const tabs = [{
   image: imageHorizontal2,
   containerRatio: ((400 / 600) * 100),
   maxScale: 3,
+  stayZoom: true,
   initialScale: 2,
   label: 'Initial scale',
   text: 'This allow you to display the content scaled (zoom x2)',
@@ -108,7 +111,7 @@ export default class App extends Component {
       </div>
     )
   }
-  renderTabContent ({maxScale, containerRatio, image, initialScale, text, styles}) {
+  renderTabContent ({maxScale, containerRatio, image, initialScale, stayZoom, text, styles}) {
     if (!image) {
       return this.renderUsage()
     }
@@ -116,7 +119,7 @@ export default class App extends Component {
       <div className='content'>
         <p>{text}</p>
         <div className='pinch-wrapper'>
-          <PinchView debug backgroundColor='#ddd' maxScale={maxScale} initialScale={initialScale} containerRatio={containerRatio} onPinchStart={() => console.log('pinch started')}>
+          <PinchView debug backgroundColor='#ddd' stayZoom={stayZoom} maxScale={maxScale} initialScale={initialScale} containerRatio={containerRatio} onPinchStart={() => console.log('pinch started')}>
             <img src={image} style={styles} onDoubleClick={this.onDblClick} />
           </PinchView>
         </div>

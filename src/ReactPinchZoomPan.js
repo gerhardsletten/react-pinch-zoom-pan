@@ -129,12 +129,36 @@ class ReactPinchZoomPan extends Component {
       return touchMove
       .map((mm) => {
         const {scale, x, y} = this.state.obj
-        const {maxScale} = this.props
+        const {maxScale, initialScale, stayZoom} = this.props
         const movePoint = normalizeTouch(mm)
 
         if (hasTwoTouchPoints(mm)) {
-          const scaleFactor = (isTouch() && mm.scale) ? mm.scale : (movePoint.x < (size.width / 2)) ? scale + ((translatePos(startPoint, size).x - translatePos(movePoint, size).x) / size.width) : scale + ((translatePos(movePoint, size).x - translatePos(startPoint, size).x) / size.width)
-          const nextScale = between(1, maxScale, scaleFactor)
+          var scaleFactor = initialScale
+          var nextScale = scaleFactor
+          if (stayZoom) {
+            scaleFactor = movePoint.x < size.width / 2 ? scale + (translatePos(startPoint, size).x - translatePos(movePoint, size).x) / size.width : scale + (translatePos(movePoint, size).x - translatePos(startPoint, size).x) / size.width
+            nextScale = between(1, maxScale, scaleFactor)
+
+            if (mm.scale <= scaleFactor) {
+              if (mm.scale < 1) {
+                nextScale = scaleFactor - (mm.scale / 10)
+              } else {
+                nextScale = scaleFactor
+              }
+            } else {
+              nextScale = mm.scale
+            }
+
+            if (nextScale < 1) {
+              nextScale = 1
+            } else if (nextScale > maxScale) {
+              nextScale = maxScale
+            }
+          } else {
+            scaleFactor = (isTouch() && mm.scale) ? mm.scale : (movePoint.x < (size.width / 2)) ? scale + ((translatePos(startPoint, size).x - translatePos(movePoint, size).x) / size.width) : scale + ((translatePos(movePoint, size).x - translatePos(startPoint, size).x) / size.width)
+            nextScale = between(1, maxScale, scaleFactor)
+          }
+
           return {
             scale: nextScale,
             x: (nextScale < 1.01) ? 0 : x,
@@ -195,6 +219,9 @@ class ReactPinchZoomPan extends Component {
 
   render () {
     const {scale, x, y} = this.state.obj
+    if(scale === undefined){
+      scale = 1
+    }
     return (
       <div ref={root => { this.root = root }}>
         {this.props.render({
@@ -209,7 +236,8 @@ class ReactPinchZoomPan extends Component {
 
 ReactPinchZoomPan.defaultProps = {
   initialScale: 1,
-  maxScale: 2
+  maxScale: 2,
+  stayZoom: true
 }
 
 ReactPinchZoomPan.propTypes = {
@@ -217,7 +245,8 @@ ReactPinchZoomPan.propTypes = {
   onPinchStart: PropTypes.func,
   onPinchStop: PropTypes.func,
   initialScale: PropTypes.number,
-  maxScale: PropTypes.number
+  maxScale: PropTypes.number,
+  stayZoom: PropTypes.bool
 }
 
 export default ReactPinchZoomPan

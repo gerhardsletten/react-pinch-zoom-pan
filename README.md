@@ -1,6 +1,8 @@
 # react-pinch-zoom-pan
 
-A react component that lets you add pinch-zoom and pan sub components. On touch you can pinch-zoom and pan the zoomed image. On desktop you can 'pinch' by holding down your *ALT-key* and do a mousedown from center of inner content onto the edges.
+A react component that lets you add pinch-zoom and pan sub components. On touch you can pinch-zoom and pan the zoomed image. On desktop you can 'pinch' by holding down your *ALT-key* and do a mousedown from center of inner content onto the edges. 
+
+This fork was added property stayZoom to maitened zoom when started the pinch event, thanks gerhardslettern.
 
 [See demo](http://gerhardsletten.github.io/react-pinch-zoom-pan/)
 
@@ -25,7 +27,7 @@ import {PinchView} from 'react-pinch-zoom-pan'
 class App extends Component {
   render () {
     return (
-      <PinchView debug backgroundColor='#ddd' maxScale={4} containerRatio={((400 / 600) * 100)}>
+      <PinchView debug backgroundColor='#ddd' stayZoom={true}  maxScale={4} containerRatio={((400 / 600) * 100)}>
         <img src={'http://lorempixel.com/600/400/nature/'} style={{
           margin: 'auto',
           width: '100%',
@@ -76,7 +78,7 @@ export default class App extends Component {
     const {height,width} = this.props
     const ratio = (height / width) * 100
     return (
-      <ReactPinchZoomPan maxScale={2} render={obj => {
+      <ReactPinchZoomPan maxScale={2} stayZoom={true} render={obj => {
         return (
           <div style={this.getContainerStyle(ratio)}>
             <div style={this.getInnerStyle()}>
@@ -102,7 +104,7 @@ export default class App extends Component {
 The component exposes 2 event listeners: `onPinchStart` and `onPinchStop`. These are called resp. when the user starts pinching and stops pinching.
 
 ```
-<PinchView debug backgroundColor='#ddd' maxScale={3} containerRatio={100} onPinchStart={() => console.log('pinch started')} onPinchStop={() => console.log('pinch stopped')}>
+<PinchView debug backgroundColor='#ddd' stayZoom={true} maxScale={3} containerRatio={100} onPinchStart={() => console.log('pinch started')} onPinchStop={() => console.log('pinch stopped')}>
   <img src={'http://lorempixel.com/400/600/nature/'} style={{
     margin: 'auto',
     width: 'auto',
@@ -115,7 +117,7 @@ The component exposes 2 event listeners: `onPinchStart` and `onPinchStop`. These
 The component exposes a prop to set the `initialScale`. This can be used to display the content with zoomed in by default
 
 ```
-<PinchView debug backgroundColor='#ddd' initalScale={2} maxScale={4} containerRatio={100}>
+<PinchView debug backgroundColor='#ddd' stayZoom={true} initalScale={2} maxScale={4} containerRatio={100}>
   <img src={'http://lorempixel.com/400/600/nature/'} style={{
     margin: 'auto',
     width: 'auto',

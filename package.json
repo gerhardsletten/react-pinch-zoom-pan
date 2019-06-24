@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gerhardsletten/react-pinch-zoom-pan.git"
+    "url": "git+https://github.com/renato-cardial/react-pinch-zoom-pan.git"
   },
   "keywords": [
     "react",
@@ -30,9 +30,9 @@
   "author": "Eyvind Gerhard Sletten",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/gerhardsletten/react-pinch-zoom-pan/issues"
+    "url": "https://github.com/renato-cardial/react-pinch-zoom-pan/issues"
   },
-  "homepage": "https://github.com/gerhardsletten/react-pinch-zoom-pan#readme",
+  "homepage": "https://github.com/renato-cardial/react-pinch-zoom-pan#readme",
   "devDependencies": {
     "babel-cli": "^6.24.0",
     "babel-core": "^6.24.0",
